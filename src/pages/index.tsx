@@ -4,6 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const formSchema = z.object({
+  email:z.string().email(),
   pickupLocation: z.string().min(1, "Pickup Location is required"),
   dropLocation: z.string().min(1, "Drop Location is required"),
   datetime: z.coerce.date().refine(
@@ -12,6 +13,7 @@ const formSchema = z.object({
     },
     { message: "Invalid datetime" }
   ),
+  specialRequirements:z.string().optional()
 });
 
 type FormSchemaType = z.infer<typeof formSchema>;
@@ -29,6 +31,7 @@ export default function Home() {
      pickup: ${data.pickupLocation}
      drop: ${data.dropLocation}
      datetime: ${data.datetime}
+     Special Requirements: ${data.specialRequirements}
     `;
     alert(output);
   };
@@ -38,6 +41,25 @@ export default function Home() {
         className="space-y-4 md:space-y-6"
         onSubmit={handleSubmit(onSubmit)}
       >
+        <div>
+          <label
+            htmlFor="email"
+            className="block mb-2 text-sm font-medium text-gray-900 "
+          >
+            Email
+          </label>
+          <input
+            type="email"
+            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+            placeholder="Enter a email"
+            {...register("email")}
+          />
+          {errors.email && (
+            <span className="text-red-800 block mt-2">
+              {errors.email?.message}
+            </span>
+          )}
+        </div>
         <div>
           <label
             htmlFor="pickuplocation"
@@ -81,7 +103,7 @@ export default function Home() {
             htmlFor="pickuplocation"
             className="block mb-2 text-sm font-medium text-gray-900"
           >
-            Drop Location
+            Date/Time
           </label>
           <input
             type="datetime-local"
@@ -93,6 +115,25 @@ export default function Home() {
           {errors.datetime && (
             <span className="text-red-800 block mt-2">
               {errors.datetime?.message}
+            </span>
+          )}
+        </div>
+        <div>
+          <label
+            htmlFor="pickuplocation"
+            className="block mb-2 text-sm font-medium text-gray-900"
+          >
+            Special Requirements
+          </label>
+          <input
+            type="text"
+            placeholder="Fitting wheelchair, Surfboard, bicycle etc."
+            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+            {...register("specialRequirements")}
+          />
+          {errors.specialRequirements && (
+            <span className="text-red-800 block mt-2">
+              {errors.specialRequirements?.message}
             </span>
           )}
         </div>
