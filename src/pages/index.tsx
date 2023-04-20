@@ -3,22 +3,9 @@ import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import TaxiIcon from "@/icons/TaxiIcon";
+import { FormSchemaType, formSchema } from "@/schemas";
 
-const formSchema = z.object({
-  email: z.string().email(),
-  pickupLocation: z.string().min(1, "Pickup Location is required"),
-  dropLocation: z.string().min(1, "Drop Location is required"),
-  datetime: z.coerce.date().refine(
-    (value) => {
-      return !isNaN(value.getTime());
-    },
-    { message: "Invalid datetime" }
-  ),
-  numberOfPassenger: z.string(),
-  specialRequirements: z.string().optional(),
-});
 
-type FormSchemaType = z.infer<typeof formSchema>;
 
 export default function Home() {
   const {
@@ -29,13 +16,13 @@ export default function Home() {
     resolver: zodResolver(formSchema),
   });
   const onSubmit: SubmitHandler<FormSchemaType> = (data) => {
-    const output = `
-     pickup: ${data.pickupLocation}
-     drop: ${data.dropLocation}
-     datetime: ${data.datetime}
-     Special Requirements: ${data.specialRequirements}
-    `;
-    alert(output);
+    fetch("api/mail", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    }).catch((err) => {});
   };
 
   return (
