@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const formSchema = z.object({
-  email:z.string().email(),
+  email: z.string().email(),
   pickupLocation: z.string().min(1, "Pickup Location is required"),
   dropLocation: z.string().min(1, "Drop Location is required"),
   datetime: z.coerce.date().refine(
@@ -13,7 +13,8 @@ const formSchema = z.object({
     },
     { message: "Invalid datetime" }
   ),
-  specialRequirements:z.string().optional()
+  numberOfPassenger : z.string(),
+  specialRequirements: z.string().optional(),
 });
 
 type FormSchemaType = z.infer<typeof formSchema>;
@@ -81,7 +82,7 @@ export default function Home() {
         </div>
         <div>
           <label
-            htmlFor="pickuplocation"
+            htmlFor="droplocation"
             className="block mb-2 text-sm font-medium text-gray-900"
           >
             Drop Location
@@ -98,29 +99,51 @@ export default function Home() {
             </span>
           )}
         </div>
-        <div>
-          <label
-            htmlFor="pickuplocation"
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
-            Date/Time
-          </label>
-          <input
-            type="datetime-local"
-            min={new Date().toISOString().slice(0, -8)}
-            defaultValue={new Date().toISOString().slice(0, -8)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
-            {...register("datetime")}
-          />
-          {errors.datetime && (
-            <span className="text-red-800 block mt-2">
-              {errors.datetime?.message}
-            </span>
-          )}
+        <div className="flex" >
+          <div className="w-full">
+            <label
+              htmlFor="datetime"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Date/Time
+            </label>
+            <input
+              type="datetime-local"
+              min={new Date().toISOString().slice(0, -8)}
+              defaultValue={new Date().toISOString().slice(0, -8)}
+              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+              {...register("datetime")}
+            />
+            {errors.datetime && (
+              <span className="text-red-800 block mt-2">
+                {errors.datetime?.message}
+              </span>
+            )}
+          </div>
+          <div className="w-full" >
+            <label
+              htmlFor="specialRequirements"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Number of Passenger
+            </label>
+            <input
+              type="number"
+              min={1}
+              defaultValue={1}
+              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+              {...register("numberOfPassenger")}
+            />
+            {errors.numberOfPassenger && (
+              <span className="text-red-800 block mt-2">
+                {errors.numberOfPassenger?.message}
+              </span>
+            )}
+          </div>
         </div>
         <div>
           <label
-            htmlFor="pickuplocation"
+            htmlFor="specialRequirements"
             className="block mb-2 text-sm font-medium text-gray-900"
           >
             Special Requirements
@@ -137,13 +160,15 @@ export default function Home() {
             </span>
           )}
         </div>
-        <button
-          type="submit"
-          className="w-full text-gray-900 bg-primary hover:brightness-90 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-          disabled={isSubmitting}
-        >
-          Get quick quote
-        </button>
+        <div>
+          <button
+            type="submit"
+            className="w-full text-gray-900 bg-primary hover:brightness-90 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            disabled={isSubmitting}
+          >
+            Get quick quote
+          </button>
+        </div>
       </form>
     </div>
   );
