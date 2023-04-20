@@ -2,6 +2,8 @@ import Image from "next/image";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import TaxiIcon from "@/icons/TaxiIcon";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -13,7 +15,7 @@ const formSchema = z.object({
     },
     { message: "Invalid datetime" }
   ),
-  numberOfPassenger : z.string(),
+  numberOfPassenger: z.string(),
   specialRequirements: z.string().optional(),
 });
 
@@ -36,6 +38,7 @@ export default function Home() {
     `;
     alert(output);
   };
+
   return (
     <div className="max-w-lg mx-4 md:mx-auto my-4 bg-gray-200 p-4 rounded-lg ">
       <form
@@ -99,7 +102,7 @@ export default function Home() {
             </span>
           )}
         </div>
-        <div className="flex" >
+        <div className="flex">
           <div className="w-full">
             <label
               htmlFor="datetime"
@@ -120,7 +123,7 @@ export default function Home() {
               </span>
             )}
           </div>
-          <div className="w-full" >
+          <div className="w-full">
             <label
               htmlFor="specialRequirements"
               className="block mb-2 text-sm font-medium text-gray-900"
@@ -166,7 +169,10 @@ export default function Home() {
             className="w-full text-gray-900 bg-primary hover:brightness-90 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             disabled={isSubmitting}
           >
-            Get quick quote
+            <span className="flex justify-center items-center gap-x-1">
+              <TaxiIcon className="w-4 h-4" />
+              Get quick quote
+            </span>
           </button>
         </div>
       </form>
