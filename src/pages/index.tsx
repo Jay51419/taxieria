@@ -1,5 +1,3 @@
-import Image from "next/image";
-import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import TaxiIcon from "@/icons/TaxiIcon";
