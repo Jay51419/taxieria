@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
-
+import { motion } from "framer-motion";
 export default function ErrorCard({
   message,
 }: {
   message: string | undefined;
 }) {
-  return <span className={`text-red-800 block`}>{message}</span>;
+  return (
+    <motion.div animate={{ opacity: 1 }} className={`text-red-400 mt-1 opacity-0`}>
+      {message}
+    </motion.div>
+  );
 }

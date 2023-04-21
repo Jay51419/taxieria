@@ -24,4 +24,8 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  background-image: url("/bg.svg");
+  background-repeat: space;
+  background-size: 16px;
+  overflow-x: hidden;
 }
