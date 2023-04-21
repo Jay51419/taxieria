@@ -39,7 +39,7 @@ export default function Home() {
           </h1>
         </div>
       </nav>
-      <motion.div layout className="flex justify-between  bg-black border border-gray-600  w-full md:max-w-4xl px-4 md:mx-auto">
+      <motion.div layout className="flex justify-between  bg-black border border-gray-600  w-full md:max-w-4xl md:mx-auto">
         <Image className="hidden lg:block" src={hero} alt="" height={400} width={400} />
         <form
           className="space-y-4 md:space-y-6  w-full lg:max-w-lg  bg-black p-4"
