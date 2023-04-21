@@ -24,7 +24,7 @@ export default function handler(
     const mailData = {
       from: process.env.EMAIL,
       to: parsedBody.data.email,
-      subject: `Your ride is processing`,
+      subject: `Your ride request is being processed`,
       text: `
         Pickup location: ${parsedBody.data.pickupLocation}
         Drop location: ${parsedBody.data.dropLocation}

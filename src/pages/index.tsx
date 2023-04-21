@@ -7,10 +7,13 @@ import { useState } from "react";
 import ErrorCard from "@/components/ErrorCard";
 import { motion } from "framer-motion";
 import hero from "../../public/hero.svg";
+import { toast } from "react-toastify";
+
 export default function Home() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
@@ -25,8 +28,20 @@ export default function Home() {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-      .then((res) => setShowButtonLoader(false))
-      .catch((err) => setShowButtonLoader(false));
+      .then((res) => {
+        setShowButtonLoader(false);
+        if(res.status == 404){
+        toast.error("Error occured");
+
+        }else{
+          reset();
+          toast.success("Request sent");
+        }
+      })
+      .catch((err) => {
+        setShowButtonLoader(false);
+        toast.error(err);
+      });
   };
 
   return (
@@ -39,8 +54,17 @@ export default function Home() {
           </h1>
         </div>
       </nav>
-      <motion.div layout className="flex justify-between  bg-black border border-gray-600  w-full md:max-w-4xl md:mx-auto">
-        <Image className="hidden lg:block" src={hero} alt="" height={400} width={400} />
+      <motion.div
+        layout
+        className="flex justify-between  bg-black border border-gray-600  w-full md:max-w-4xl md:mx-auto"
+      >
+        <Image
+          className="hidden lg:block"
+          src={hero}
+          alt=""
+          height={400}
+          width={400}
+        />
         <form
           className="space-y-4 md:space-y-6  w-full lg:max-w-lg  bg-black p-4"
           onSubmit={handleSubmit(onSubmit)}
