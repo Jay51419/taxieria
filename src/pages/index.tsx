@@ -118,7 +118,7 @@ export default function Home() {
                 htmlFor="specialRequirements"
                 className="block mb-2 text-sm font-medium text-gray-200"
               >
-                Number of Passenger
+                Passengers
               </label>
               <input
                 type="number"
