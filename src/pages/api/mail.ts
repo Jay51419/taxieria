@@ -15,6 +15,10 @@ const transporter = nodemailer.createTransport({
   secure: true,
 });
 
+export const config = {
+  runtime: "edge",
+};
+
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
