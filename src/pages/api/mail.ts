@@ -19,7 +19,7 @@ export const config = {
   runtime: "edge",
 };
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
@@ -37,7 +37,7 @@ export default function handler(
         Special Requirements : ${parsedBody.data.specialRequirements}
       `,
     };
-    transporter.sendMail(mailData, function (err, info) {
+    await transporter.sendMail(mailData, function (err, info) {
       if (err) res.status(404).send({ message: err.message });
       else res.status(200).send({ message: info.response });
     });
